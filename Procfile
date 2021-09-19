@@ -1,1 +1,1 @@
-web: gunicorn dashboard/dashboard.wsgi
+web: gunicorn dashboard.dashboard.wsgi
