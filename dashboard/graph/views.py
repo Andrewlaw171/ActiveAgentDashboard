@@ -1,14 +1,5 @@
-from django.db.models import Count
 from django.http import JsonResponse
-from django.shortcuts import render
-from django.views.generic import TemplateView, CreateView
-
-from .forms import DateForm
-from .models import GraphSpan
-from .utils.batch_load_json import json_to_db
-from django.db.models.functions import TruncHour
 from django.db import connection
-from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 
