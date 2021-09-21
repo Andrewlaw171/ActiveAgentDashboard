@@ -1,9 +1,12 @@
 function graphTest() {
+  // Reset the graph
+  $('#graph').remove();
+  $('#container').append('<canvas id="graph" data-url="/draw-graph/"></canvas>');
+
   var $graph = $("#graph");
 
   var fromDatetime = $("#fromDatetime").val();
   var toDatetime = $("#toDatetime").val();
-  console.log(fromDatetime);
 
   $.ajax({
     url: $graph.data("url"),
