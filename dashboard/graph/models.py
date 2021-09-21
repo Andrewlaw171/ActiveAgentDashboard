@@ -7,6 +7,7 @@ class AgentSession(models.Model):
     callEndTime = models.DateTimeField()
 
 
-class GraphSpan(models.Model):
-    startTime = models.DateField()
+class ActiveAgentsPerHour(models.Model):
+    count = models.IntegerField()
+    time = models.DateTimeField()
 

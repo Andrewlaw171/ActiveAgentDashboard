@@ -1,17 +1,21 @@
+import pandas as pd
+
+from datetime import timedelta, datetime
 from django.http import JsonResponse
 from django.db import connection
 from django.shortcuts import render
 
+from .utils.batch_load_json import create_active_agent_table, json_to_db
+
 
 def dashboard(request):
-    query = "SELECT * FROM graph_agentsession LIMIT 1"
-    cursor = connection.cursor()
-    cursor.execute(query)
-
     return render(request, 'dashboard.html')
 
 
 def draw_graph(request):
+    # json_to_db("C:/Users/Andrew/Desktop/takehomes/operata/tech_test.json")
+    # create_active_agent_table()
+
     labels = []
     data = []
     from_date = ""
@@ -28,19 +32,14 @@ def draw_graph(request):
         filter_range = filter_range.replace('/', '-')
         print(filter_range)
 
-    query = """ SELECT time, count(*) as active_count FROM (
-        SELECT strftime('%Y-%m-%d %H', callStartTime) as time FROM graph_agentsession UNION ALL 
-        SELECT strftime('%Y-%m-%d %H', callEndTime) as time FROM graph_agentsession)
-        {} GROUP BY time 
-    """.format(filter_range)
-
+    query = "SELECT * FROM graph_activeagentsperhour " + filter_range
     cursor = connection.cursor()
     cursor.execute(query)
 
     rows = cursor.fetchall()
 
     for row in rows:
-        labels.append(row[0])
+        labels.append(row[2])
         data.append(row[1])
 
     return JsonResponse(data={
